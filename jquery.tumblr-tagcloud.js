@@ -64,8 +64,8 @@
             href: '/tagged/' + tagList[tag], 
             title: tagList[tag] + ' [' + count + ']'
           })
-          .css('font-size', 100 + count + '%').
-          html(tagList[tag]);
+          .css('font-size', 100 + count + '%')
+          .html(tagList[tag]);
         $this.append(linkTag);
       });
     }
