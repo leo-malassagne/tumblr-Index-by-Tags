@@ -44,7 +44,7 @@ Specifies the amount of posts that should be retrieved and processed to populate
 
 ### numPosts ###
 
-Specifies the how many posts on each turn should be requested from the Tumblr API.
+Specifies how many posts on each turn should be requested from the Tumblr API.
 
 ## Known Issues ##
 
@@ -57,4 +57,5 @@ Report 'em here or fork the plugin and fix 'em.
 ## Copyright & License ##
 
 Copyright (C) 2012 Sascha Rudolph <sascharenerudolph@gmail.com>
+
 Licensed under the BSD 3-Clause License
