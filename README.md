@@ -40,9 +40,13 @@ Specifies the URL of your Tumblr site from which the tag cloud should be generat
 
 ### maxPosts ###
 
+__Default: 400__
+
 Specifies the amount of posts that should be retrieved and processed to populate the tag cloud.
 
 ### numPosts ###
+
+__Default: 50__
 
 Specifies how many posts on each turn should be requested from the Tumblr API.
 
