@@ -44,6 +44,15 @@ jQuery('#tumblrTagCloud').tumblrTagCloud({
 });
 ```
 
+Get your tags sorted either alphabetically, or randomly or by count or just as fetched.
+
+```js
+jQuery('#tumblrTagCloud').tumblrTagCloud({
+  url: 'http://username.tumblr.com',
+  sortBy: 'alpha'
+});
+```
+
 To avoid any complaints, please checkout the documentation for username and password in the parameters
 listing, just below this paragraph.
 
@@ -76,6 +85,19 @@ __NOTE__:
 This is __NOT__ your login password, but the password that you specified in your blog settings
 (Password protect this blog) and should be treated as any other password; with utmost care or
 in the words of the Dog Brothers: 'Protect yourself at all times'.
+
+### sortBy ###
+
+__Default__: false
+
+Specifies the sorting algorithm of the tag list. If no sortBy is defined, then the list
+gets printed as fetched from the Tumblr API. 
+
+Supported algorithms:
+
+* alpha - alphabetical sort
+* random - random sort
+* bycount - sorts by amount of tag usage/occurence
 
 ### username ###
 

@@ -9,6 +9,8 @@
     var settings = $.extend({
       numPosts: 50, 
       maxPosts: 400,
+      // alpha | random | bycount, anything else is intepreted as unsorted
+      sortBy: false,
       // if somesite.tumblr.com is your blog, then 'somesite' will be the username
       username: false,
       // this is _NOT_ your login password, but the password you specified in your
@@ -16,14 +18,13 @@
       password: false
     }, options), 
       $this = null,
-      tags = [], 
+      tagsList = [], 
+      tagsSeen = {},
+      tagsSorted = [],
       posts = [], 
       postsTotal = 0, 
       postsCount = 0,
-      tagCounts = {}, 
-      tagList = {},
       tag = '', 
-      linkTag = null, 
       i;
   
     function requestTags() {
@@ -47,11 +48,15 @@
       // extract and count tags
       for (i = 0; i < tags.length; i++) {
         tag = tags[i].textContent.replace(' ',  '');
-        if (tagCounts[tag]) {
-          tagCounts[tag]++;
+        if (tagsSeen[tag]) {
+          tagsList[tagsSeen[tag]].count++;
         } else {
-          tagCounts[tag] = 1;
-          tagList[tag] = tags[i].textContent;
+          tagsSeen[tag] = tagsList.length;
+          tagsList.push({
+            count: 1,
+            normalized: tag,
+            original: tags[i].textContent
+          });
         }
       }
 
@@ -67,16 +72,36 @@
     }
 
     function renderTags() {
-      $.each(tagCounts, function(tag, count) {
-        linkTag = $('<a>')
-          .attr({
-            href: '/tagged/' + tagList[tag], 
-            title: tagList[tag] + ' [' + count + ']'
-          })
-          .css('font-size', 100 + count + '%')
-          .html(tagList[tag]);
-        $this.append(linkTag);
+    
+      if (settings.sortBy === 'alpha') {
+        tagsSorted = tagsList.sort(function(a, b) {
+          return a.normalized.localeCompare(b.normalized);
+        });
+      } else if (settings.sortBy === 'bycount') {
+        tagsSorted = tagsList.sort(function(a, b) {
+          return b.count - a.count;
+        });
+      } else if (settings.sortBy === 'random') {
+        tagsSorted = tagsList.sort(function(a, b) {
+          return Math.round(Math.random()) - 0.5;
+        });
+      } else {
+        $.extend(true, tagsSorted, tagsList);
+      }
+      
+      $this.empty();
+      jQuery.each(tagsSorted, function(idx, t) {
+        $this.append(
+          jQuery('<a>')
+            .attr({
+              href: '#' + t.original,
+              title: t.original + '[' + t.count + ']'
+            })
+            .css('font-size', 100 + t.count + '%')
+            .html(t.original)
+        )
       });
+      
     }
 
     return this.each(function() {
