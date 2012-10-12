@@ -32,6 +32,21 @@ jQuery('#tumblrTagCloud').tumblrTagCloud({
 });
 ```
 
+If your Tumblr is password protected you might want to utilize username and password as well.
+
+```js
+jQuery('#tumblrTagCloud').tumblrTagCloud({
+  url: 'http://username.tumblr.com',
+  maxPosts: 200,
+  numPosts: 20,
+  username: 'somesite',
+  password: 'thepassword'
+});
+```
+
+To avoid any complaints, please checkout the documentation for username and password in the parameters
+listing, just below this paragraph.
+
 ## Parameters ##
 
 ### url ###
@@ -50,9 +65,25 @@ __Default: 50__
 
 Specifies how many posts on each turn should be requested from the Tumblr API.
 
-## Known Issues ##
+### password ###
 
-* currently the plugin does not work with password protected tumblr sites.
+__Default: false__
+
+Specifies the password that should be used to query the posts from the Tumblr API.
+
+__NOTE__:
+
+This is __NOT__ your login password, but the password that you specified in your blog settings
+(Password protect this blog) and should be treated as any other password; with utmost care or
+in the words of the Dog Brothers: 'Protect yourself at all times'.
+
+### username ###
+
+__Default: false__
+
+Specifies the username that should be used to query the posts from the Tumblr API. The username
+to give here, might differ from your login username. If your password protected tumblr
+is http://somesite.tumblr.com then username should be 'somesite'.
 
 ## Bugs ##
 

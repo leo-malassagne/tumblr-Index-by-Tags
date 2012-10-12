@@ -8,7 +8,12 @@
   
     var settings = $.extend({
       numPosts: 50, 
-      maxPosts: 400
+      maxPosts: 400,
+      // if somesite.tumblr.com is your blog, then 'somesite' will be the username
+      username: false,
+      // this is _NOT_ your login password, but the password you specified in your
+      // blog settings!
+      password: false
     }, options), 
       $this = null,
       tags = [], 
@@ -22,15 +27,19 @@
       i;
   
     function requestTags() {
+      $this.html('Loading... ');
       $.ajax({
         url: settings.url + '/api/read?num=' + settings.numPosts + '&start=' + settings.postCount, 
+        dataType: 'xml',
+        username: settings.username || false,
+        password: settings.password || false,
         success: processResponse, 
-        error: function() { $this.append('<span>Unable to query tag list.</span>>'); }, 
-        dataType: 'xml'
+        error: function() { $this.append('<span>unable to query tag list.</span>'); }
       });
     }
 
     function processResponse(data) {
+      $this.empty();
       tags = data.getElementsByTagName('tag');
       posts = data.getElementsByTagName('posts');
       postsTotal = posts[0].getAttribute('total') - 0;
