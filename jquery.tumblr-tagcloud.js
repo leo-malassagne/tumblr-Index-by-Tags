@@ -94,7 +94,7 @@
         $this.append(
           jQuery('<a>')
             .attr({
-              href: settings.url + '/' + t.original,
+              href: settings.url + '/tagged/' + t.original,
               title: t.original + '[' + t.count + ']'
             })
             .css('font-size', 100 + t.count + '%')
