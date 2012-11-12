@@ -94,7 +94,7 @@
         $this.append(
           jQuery('<a>')
             .attr({
-              href: '#' + t.original,
+              href: settings.url + '/' + t.original,
               title: t.original + '[' + t.count + ']'
             })
             .css('font-size', 100 + t.count + '%')
