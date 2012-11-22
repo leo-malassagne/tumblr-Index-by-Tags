@@ -99,7 +99,7 @@
             })
             .css('font-size', 100 + t.count + '%')
             .html(t.original)
-        )
+        );
       });
       
     }
