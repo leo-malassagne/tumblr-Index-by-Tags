@@ -30,7 +30,7 @@
     function requestTags() {
       $this.html('Loading... ');
       $.ajax({
-        url: settings.url + '/api/read?num=' + settings.numPosts + '&start=' + settings.postCount, 
+        url: settings.url + '/api/read?num=' + settings.numPosts + '&start=' + postsCount, 
         dataType: 'xml',
         username: settings.username || false,
         password: settings.password || false,
