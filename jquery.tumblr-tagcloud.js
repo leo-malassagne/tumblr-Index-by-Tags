@@ -18,10 +18,10 @@
       password: false
     }, options), 
       $this = null,
+      tags = [],
       tagsList = [], 
       tagsSeen = {},
       tagsSorted = [],
-      posts = [], 
       postsTotal = 0, 
       postsCount = 0,
       tag = '', 
@@ -30,8 +30,8 @@
     function requestTags() {
       $this.html('Loading... ');
       $.ajax({
-        url: settings.url + '/api/read?num=' + settings.numPosts + '&start=' + postsCount, 
-        dataType: 'xml',
+        url: settings.url + '/api/read/json/?num=' + settings.numPosts + '&start=' + postsCount + '&callback=?',
+        dataType: 'JSON',
         username: settings.username || false,
         password: settings.password || false,
         success: processResponse, 
@@ -41,26 +41,27 @@
 
     function processResponse(data) {
       $this.empty();
-      tags = data.getElementsByTagName('tag');
-      posts = data.getElementsByTagName('posts');
-      postsTotal = posts[0].getAttribute('total') - 0;
-
-      // extract and count tags
-      for (i = 0; i < tags.length; i++) {
-        tag = tags[i].textContent.replace(' ',  '');
-        if (tagsSeen[tag]) {
-          tagsList[tagsSeen[tag]].count++;
-        } else {
-          tagsSeen[tag] = tagsList.length;
-          tagsList.push({
-            count: 1,
-            normalized: tag,
-            original: tags[i].textContent
-          });
+      
+      jQuery.each(data.posts, function(idx, post) {
+        if (post.tags && post.tags.length) {
+          for (i = 0; i < post.tags.length; i++) {
+            tag = post.tags[i].replace(' ', '');
+            if (tagsSeen[tag]) {
+              tagsList[tagsSeen[tag]].count++;
+            } else {
+              tagsSeen[tag] = tagsList.length;
+              tagsList.push({
+                count: 1,
+                normalized: tag,
+                original: post.tags[i]
+              });
+            }
+          }
         }
-      }
-
+      });
+            
       // test if we need to fire up another request..
+      postsTotal = data.posts.length || 0;
       if (postsCount < Math.min(postsTotal,  settings.maxPosts)) {
         postsCount += 50;
         requestTags();
