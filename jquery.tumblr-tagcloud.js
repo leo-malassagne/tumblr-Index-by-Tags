@@ -45,7 +45,7 @@
       jQuery.each(data.posts, function(idx, post) {
         if (post.tags && post.tags.length) {
           for (i = 0; i < post.tags.length; i++) {
-            tag = post.tags[i].replace(' ', '');
+            tag = post.tags[i].replace(' ', '').toLowerCase();
             if (tagsSeen[tag]) {
               tagsList[tagsSeen[tag]].count++;
             } else {
