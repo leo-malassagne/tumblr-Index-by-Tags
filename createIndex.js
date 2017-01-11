@@ -89,7 +89,6 @@ function tumblrIndex (container, sortOptions) {
 				elmt = $.createElement("IMG");
 				elmt.className = 'entry-thumbnail';
 				elmt.setAttribute("src", entry.pic);
-				elmt.style.top = Math.max(0,159-entry.ratio*100)+'px';
 				current.appendChild(elmt);
 				
 				elmt = $.createElement("DIV");

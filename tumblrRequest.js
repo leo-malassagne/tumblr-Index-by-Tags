@@ -69,7 +69,6 @@ function dataLoader (options, callback) {
 				blog: settings.url,
 				entries: entries,
 			};
-			console.log(JSON.stringify(data));
 			callback(data);
 		}
 	}

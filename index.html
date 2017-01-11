@@ -35,7 +35,7 @@
 				},
 				dLoader = new dataLoader({
 					url: 'http://ulyssemalassagne.tumblr.com',
-					filter: '',
+					filter: 'coords:',
 					dataSet: {
 						date: function(post){return Date.parse(post.date);},
 						pic: "photo-url-500",
@@ -45,7 +45,7 @@
 					sortBy: 'nombre de pages'
 				},
 				function(data){
-					tumblrIndex("container", sorting)(data);
+					tumblrMap("map")(data);
 				});
 			(function() {dLoader.requestPosts()})();
 		</script>
