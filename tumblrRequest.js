@@ -1,28 +1,6 @@
-var by = function (method, order) {
-	
-	var factor = 1,
-		methods;
-	if (order === 'incresing') {
-		factor = -1;
-	}
-	methods = {
-		alpha: function (a, b){
-			return factor * b.title.localeCompare(a.title);
-		},
-		nbPages: function (a, b){
-			return factor * (b.nbPages - a.nbPages);
-		},
-		date: function (a, b){
-			return factor * (b.date - a.date);
-		}
-	};
-	return methods[method];
-}
+function dataLoader (options, callback) {
 
-function getData (options, data, callback) {
-	
-	var ready = false;
-	var settings = jQuery.extend({
+	var settings = {
 			numPosts: 50, 
 			maxPosts: 400,
 			// if somesite.tumblr.com is your blog, then 'somesite' will be the username
@@ -30,30 +8,19 @@ function getData (options, data, callback) {
 			// this is _NOT_ your login password, but the password you specified in your
 			// blog settings!
 			password: false
-		}, options),
-		postsList = [],
-		tagsSeen = {},
+		},
+		entries = [],
+		data = {},
 		postsTotal = 0,
 		postsCount = 0,
 		tag = '', 
 		i = 0;
-
-	function requestPosts() {
-		jQuery.ajax({
-			url: settings.url + '/api/read/json/?num=' + settings.numPosts + '&start=' + postsCount + '&callback=?',
-			dataType: 'JSON',
-			username: settings.username || false,
-			password: settings.password || false,
-			success: selectData,
-			error: function() {console.log('unable to query tag list.'); }
-		});
-	}
-	
-	function selectData(response) {
+		
+	this.selectData = function (response) {
 		var selected = undefined,
+			length = 0,
 			name = '',
 			title = '',
-			doc = {},
 			index = -1,
 			tempCount = 0,
 			i;
@@ -62,29 +29,30 @@ function getData (options, data, callback) {
 				var selected = post.tags.filter(function(tag){
 					return tag.startsWith(settings.filter);
 				});
-				for (i = 0; i < selected.length; i++) {
+				length = selected.length
+				for (i = 0; i < length; i++) {
 					title = selected[i].slice(settings.filter.length);
 					tempCount = 1;
-					index = postsList.findIndex(function(post){
+					index = entries.findIndex(function(post){
 						return post.title === title;
 					});
 					if (index === -1) {
-						index = postsList.length;
-						postsList.push({
+						index = entries.length;
+						entries.push({
 							title: title,
 							nbPages: 0
 						});
 					}
-					if (settings.overwrite || postsList[index].nbPages === 0) {
+					if (settings.overwrite || entries[index].nbPages === 0) {
 						for (name in settings.dataSet){
 							if (typeof settings.dataSet[name] == 'function') {
-								postsList[index][name] = settings.dataSet[name](post);
+								entries[index][name] = settings.dataSet[name](post);
 							} else {
-								postsList[index][name] = post[settings.dataSet[name]];
+								entries[index][name] = post[settings.dataSet[name]];
 							}
 						}
 					}
-					postsList[index].nbPages++;
+					entries[index].nbPages++;
 				}
 			}
 		});
@@ -93,21 +61,29 @@ function getData (options, data, callback) {
 		postsTotal = response.posts.length || 0;
 		if (postsCount < Math.min(postsTotal,  settings.maxPosts)) {
 			postsCount += 50;
-			requestPosts();
+			this.requestPosts();
 		}
 		else {
-			if (settings.sortBy){
-				postsList.sort(by(settings.sortBy,settings.sortingOrder));
-			}
 			data = {
 				filter: settings.filter,
 				blog: settings.url,
-				posts: postsList,
-				sortedBy: settings.sortBy || 'date',
-				order: settings.sortingOrder || 'decresing'
+				entries: entries,
 			};
+			console.log(JSON.stringify(data));
 			callback(data);
 		}
 	}
-	requestPosts();
+
+	this.requestPosts = function() {
+		var uid = (new Date()).getTime(),
+        
+		script = document.createElement('script');
+		script.type = 'text/javascript';
+		script.src = settings.url + "/api/read/json/?num=" + settings.numPosts + "&start=" + postsCount + "&callback=dLoader.selectData";
+		document.head.appendChild(script);
+	}
+	
+	for (opt in options) {
+		settings[opt] = options[opt];
+	}
 }

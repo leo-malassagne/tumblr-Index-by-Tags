@@ -1,12 +1,13 @@
 ## About ##
 
-A simple jQuery plugin to generate a Tag Cloud based on your Tumblr posts.
+This javascript plugin fetch data about 
 
 ## Installation ##
 
-Just include the Javascript file in your Tumblr theme after you've included jQuery.
+Include the Javascript file in your Tumblr theme.
+Requires jQuery, and Leaflet for the "createMap" part.
 
-## Basic Usage ##
+## getData ##
 
 Create a placeholder div to put the tag cloud in (can be also on a separate page):
 
@@ -113,6 +114,7 @@ Report 'em here or fork the plugin and fix 'em.
 
 ## Copyright & License ##
 
-Copyright (C) 2012 Sascha Rudolph <sascharenerudolph@gmail.com>
+Copyright (C) 2016 Léo Malassagne <malassagne.leo@gmail.com>
+Copyright (C) 2012 Sascha Rudolph <sascharenerudolph@gmail.com> for original Tumblr Tag Cloud jQuery Plugin 
 
 Licensed under the BSD 3-Clause License

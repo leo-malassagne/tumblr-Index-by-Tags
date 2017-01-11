@@ -1,96 +1,116 @@
-function tumblrIndex (container) {
-	return function(postsList){
-		jQuery(container).empty();
-		var sortSelect = jQuery('<select>')
-			.change(function(){
-				postsList.posts.sort(by(jQuery(this).val(),postsList.order));
-				postsList.sortedBy = jQuery(this).val();
-				tumblrIndex(container)(postsList);
-			})
-			.append(
-				jQuery('<option>')
-				.attr('value', 'alpha')
-				.html('ordre alphabétique')
-			)
-			.append(
-				jQuery('<option>')
-				.attr('value', 'date')
-				.html('date')
-			)
-			.append(
-				jQuery('<option>')
-				.attr('value', 'nbPages')
-				.html('nombre de pages')
-			);
+function tumblrIndex (container, sortOptions) {
+	
+	var $ = document,
+		root = $.getElementById(container);
+		
+	return function(data){
+		var sortMenu,
+			gallery,
+			current,
+			elmt,
+			index = 0;
+		
+		function createSortMenu (options) {
+			var menu = $.createElement("DIV"),
+				current,
+				elmt,
+				index;
 			
-			orderSelect = jQuery('<select>')
-			.change(function(){
-				postsList.posts.sort(by(postsList.sortedBy,jQuery(this).val()));
-				postsList.order = jQuery(this).val();
-				tumblrIndex(container)(postsList);
-			})
-			.append(
-				jQuery('<option>')
-				.attr('value', 'incresing')
-				.html('croissant')
-			)
-			.append(
-				jQuery('<option>')
-				.attr('value', 'decresing')
-				.html('decroissant')
-			);
+			current = $.createElement("SPAN");
+			current.className = "pad5";
+			current.appendChild($.createTextNode('Trier par:'));
+			menu.appendChild(current);
 			
-		sortSelect.children("[value='" + postsList.sortedBy + "']").attr('selected', 'selected');
-		orderSelect.children("[value='" + postsList.order + "']").attr('selected', 'selected');
+			current = $.createElement("SELECT");
+			for	(index in options.methods) {
+				elmt = $.createElement("OPTION");
+				elmt.appendChild($.createTextNode(index));
+				if (index === data.sortedBy) {
+					elmt.setAttribute('selected', 'selected');
+				}
+				current.appendChild(elmt);
+			}
+			current.onchange = function(){
+				var newGal;
+				data.sortedBy = this.value;
+				data.entries.sort(options.methods[data.sortedBy](options.order[data.order]));
+				newGal = createGallery(data)
+				root.replaceChild(newGal, gallery);
+				gallery = newGal;
+			};
+			menu.appendChild(current);
+			
+			current = $.createElement("SPAN");
+			current.className = "pad5";
+			current.appendChild($.createTextNode('Ordre:'));
+			menu.appendChild(current);
+			
+			current = $.createElement("SELECT");
+			for	(index in options.order) {
+				elmt = $.createElement("OPTION");
+				elmt.appendChild($.createTextNode(index));
+				if (index === data.order) {
+					elmt.setAttribute('selected', 'selected');
+				}
+				current.appendChild(elmt);
+			}
+			current.onchange = function(){
+				var newGal;
+				data.order = this.value;
+				data.entries.sort(options.methods[data.sortedBy](options.order[data.order]));
+				newGal = createGallery(data)
+				root.replaceChild(newGal, gallery);
+				gallery = newGal;
+			};
+			menu.appendChild(current);
+			menu.className = "sortMenu";
+			return menu;
+		}
 
-		jQuery(container)
-		.append(
-			jQuery('<form>')
-			.append(
-				jQuery('<span>')
-				.html('Trier par:')
-			)
-			.append(sortSelect)
-			.append(
-				jQuery('<span>')
-				.html('Par ordre:')
-			)
-			.append(orderSelect)
-		);
-		jQuery.each(postsList.posts, function(idx, t) {
-			jQuery(container)
-			.append(
-				jQuery('<a>')
-				.attr({
-					href: postsList.blog + '/tagged/' + postsList.filter + t.title,
-					title: t.title
-				})
-				.append(
-					jQuery('<div>')
-					.attr({
-						class: 'gallery-wrapper'
-						
-					})
-					.append(
-						jQuery('<img/>')
-						.attr({
-							src: t.pic,
-							class: 'gallery-pic'
-						})
-						.css('top', Math.max(0,159-t.ratio*100)+'px')
-					)
-					.append(
-						jQuery('<div>')
-						.attr({
-							class: 'gallery-title',
-						})
-						.append(
-							jQuery('<h2>')
-								.html(t.title)
-						)
-					)
-				)
-			)
-		});
+		function createGallery(data) {
+			var gal = $.createElement("DIV"),
+				current,
+				elmt,
+				index,
+				entry;
+			for (index in data.entries) {
+				entry = data.entries[index];
+				
+				current = $.createElement("A");
+				current.setAttribute("href", data.blog + "/tagged/" + data.filter + entry.title);
+				current.setAttribute("title", entry.title);
+				gal.appendChild(current);
+				
+				elmt = $.createElement("DIV");
+				elmt.className = "entry";
+				current.appendChild(elmt);
+				current = elmt;
+				
+				elmt = $.createElement("IMG");
+				elmt.className = 'entry-thumbnail';
+				elmt.setAttribute("src", entry.pic);
+				elmt.style.top = Math.max(0,159-entry.ratio*100)+'px';
+				current.appendChild(elmt);
+				
+				elmt = $.createElement("DIV");
+				elmt.className = "entry-title";
+				current.appendChild(elmt);
+				current = elmt;
+				
+				elmt = $.createElement("H2");
+				elmt.appendChild($.createTextNode(entry.title));
+				current.appendChild(elmt);
+			}
+			return gal
+			;
+		}
+		
+		data.sortedBy = 'date';
+		data.order = "décroissant";
+		sortMenu = createSortMenu(sortOptions);
+		gallery = createGallery(data);
+		root.appendChild(sortMenu);
+		root.appendChild(gallery);
+		root.className = "gallery";
 	}
 }

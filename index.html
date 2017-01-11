@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<link rel="stylesheet" type="text/css" href="https://unpkg.com/leaflet@1.0.2/dist/leaflet.css" />
+		<link rel="stylesheet" type="text/css" href="main.css" />
+		<script src="https://unpkg.com/leaflet@1.0.2/dist/leaflet.js"></script>
+		<script src="tumblrRequest.js" type="text/javascript"></script>
+		<script src="createIndex.js" type="text/javascript"></script>
+		<script src="createMap.js" type="text/javascript"></script>
+		<script>
+			var data = {},
+				sorting = {
+					methods: {
+						'nom': function (order){
+							return function (a, b) {
+								return order * b.title.localeCompare(a.title);
+							}
+						},
+						'nombre de pages': function (order){
+							return function (a, b) {
+								return order * (b.nbPages - a.nbPages);
+							}
+						},
+						'date': function (order){
+							return function (a, b) {
+								return order * (b.date - a.date);
+							}
+						}
+					},
+					order: {
+						'croissant': -1,
+						'décroissant': 1
+					}
+				},
+				dLoader = new dataLoader({
+					url: 'http://ulyssemalassagne.tumblr.com',
+					filter: '',
+					dataSet: {
+						date: function(post){return Date.parse(post.date);},
+						pic: "photo-url-500",
+						ratio: function(post){return post.height/post.width;}
+					},
+					overwrite: true,
+					sortBy: 'nombre de pages'
+				},
+				function(data){
+					tumblrIndex("container", sorting)(data);
+				});
+			(function() {dLoader.requestPosts()})();
+		</script>
+	</head>
+	<body>
+		<div id="map" style="width:640px; height: 480px"></div>
+		<div id="container"></div>
+	</body>
+</html>
+
