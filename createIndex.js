@@ -1,7 +1,7 @@
 function tumblrIndex (container, sortOptions) {
 	
 	var $ = document,
-		root = $.getElementById(container);
+		root = container;
 		
 	return function(data){
 		var sortMenu,
@@ -18,7 +18,7 @@ function tumblrIndex (container, sortOptions) {
 			
 			current = $.createElement("SPAN");
 			current.className = "pad5";
-			current.appendChild($.createTextNode('Trier par:'));
+			current.appendChild($.createTextNode('Trier par :'));
 			menu.appendChild(current);
 			
 			current = $.createElement("SELECT");
@@ -42,7 +42,7 @@ function tumblrIndex (container, sortOptions) {
 			
 			current = $.createElement("SPAN");
 			current.className = "pad5";
-			current.appendChild($.createTextNode('Ordre:'));
+			current.appendChild($.createTextNode('Ordre :'));
 			menu.appendChild(current);
 			
 			current = $.createElement("SELECT");

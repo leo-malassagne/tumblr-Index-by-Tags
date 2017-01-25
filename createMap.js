@@ -1,9 +1,10 @@
 function tumblrMap (container) {
 	var $ = document;
-		root = $.getElementById(container)
+	container.id = "map";
+	container.style.height = "480px";
 	return function (data) {
 		var map = L.map(
-			container,
+			"map",
 			{
 				center: [0, 0],
 				zoom: 1,

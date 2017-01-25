@@ -45,14 +45,16 @@
 					sortBy: 'nombre de pages'
 				},
 				function(data){
-					tumblrMap("map")(data);
+					var container = document.getElementsByTagName("article")[0];
+					tumblrMap(container)(data);
 				});
 			(function() {dLoader.requestPosts()})();
 		</script>
 	</head>
 	<body>
-		<div id="map" style="width:640px; height: 480px"></div>
-		<div id="container"></div>
+		<article>
+			<div></div>
+		</article>
 	</body>
 </html>
 
