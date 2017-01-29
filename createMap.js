@@ -3,6 +3,7 @@ function tumblrMap (container) {
 	container.id = "map";
 	container.style.height = "480px";
 	return function (data) {
+		container.innerHTML = "";
 		var map = L.map(
 			"map",
 			{

@@ -100,6 +100,7 @@ function tumblrIndex (container, sortOptions) {
 				elmt.appendChild($.createTextNode(entry.title));
 				current.appendChild(elmt);
 			}
+			gal.className = "gallery";
 			return gal
 			;
 		}
@@ -108,8 +109,8 @@ function tumblrIndex (container, sortOptions) {
 		data.order = "décroissant";
 		sortMenu = createSortMenu(sortOptions);
 		gallery = createGallery(data);
+		root.innerHTML = "";
 		root.appendChild(sortMenu);
 		root.appendChild(gallery);
-		root.className = "gallery";
 	}
 }
