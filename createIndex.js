@@ -24,7 +24,7 @@ function tumblrIndex (container, sortOptions) {
 			current = $.createElement("SELECT");
 			for	(index in options.methods) {
 				elmt = $.createElement("OPTION");
-				elmt.appendChild($.createTextNode(index));
+				elmt.innerHTML = index;
 				if (index === data.sortedBy) {
 					elmt.setAttribute('selected', 'selected');
 				}
@@ -48,7 +48,7 @@ function tumblrIndex (container, sortOptions) {
 			current = $.createElement("SELECT");
 			for	(index in options.order) {
 				elmt = $.createElement("OPTION");
-				elmt.appendChild($.createTextNode(index));
+				elmt.innerHTML = index;
 				if (index === data.order) {
 					elmt.setAttribute('selected', 'selected');
 				}
@@ -106,7 +106,7 @@ function tumblrIndex (container, sortOptions) {
 		}
 		
 		data.sortedBy = 'date';
-		data.order = "décroissant";
+		data.order = "d&eacute;croissant";
 		sortMenu = createSortMenu(sortOptions);
 		gallery = createGallery(data);
 		root.innerHTML = "";
