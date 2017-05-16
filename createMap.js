@@ -26,40 +26,41 @@ function tumblrMap (container) {
 			coords = [];
 		
 		for (index in data.entries) {
-				entry = data.entries[index];
-				coords = entry.title.split(';').map(function(elt){
-					return elt/100;
-				});
-				
-				current = $.createElement("A");
-				current.setAttribute("href", data.blog + "/tagged/" + data.filter + entry.title);
-				current.setAttribute("title", entry.title);
-				L.marker(coords)
-				.bindPopup(
-					L.popup()
-					.setContent(current)
-				)
-				.addTo(map);
-				
-				elmt = $.createElement("DIV");
-				elmt.className = "entry";
-				current.appendChild(elmt);
-				current = elmt;
-				
-				elmt = $.createElement("IMG");
-				elmt.className = 'entry-thumbnail';
-				elmt.setAttribute("src", entry.pic);
-				elmt.style.width = '200px';
-				current.appendChild(elmt);
-				
-				elmt = $.createElement("DIV");
-				elmt.className = "entry-title";
-				current.appendChild(elmt);
-				current = elmt;
-				
-				elmt = $.createElement("H2");
-				elmt.appendChild($.createTextNode(coords[0] + ";" + coords[1]));
-				current.appendChild(elmt);
+			console.log(data.entries);
+			entry = data.entries[index];
+			coords = entry.title.split(';').map(function(elt){
+				return elt/100;
+			});
+			console.log(coords);
+			current = $.createElement("A");
+			current.setAttribute("href", data.blog + "/tagged/" + entry.location);
+			current.setAttribute("title", entry.title);
+			L.marker(coords)
+			.bindPopup(
+				L.popup()
+				.setContent(current)
+			)
+			.addTo(map);
+			
+			elmt = $.createElement("DIV");
+			elmt.className = "entry";
+			current.appendChild(elmt);
+			current = elmt;
+			
+			elmt = $.createElement("IMG");
+			elmt.className = 'entry-thumbnail';
+			elmt.setAttribute("src", entry.pic);
+			elmt.style.width = '200px';
+			current.appendChild(elmt);
+			
+			elmt = $.createElement("DIV");
+			elmt.className = "entry-title";
+			current.appendChild(elmt);
+			current = elmt;
+			
+			elmt = $.createElement("H2");
+			elmt.appendChild($.createTextNode(entry.location));
+			current.appendChild(elmt);
 		}
 	}
 }

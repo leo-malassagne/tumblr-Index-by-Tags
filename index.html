@@ -35,8 +35,17 @@
 				},
 				dLoader = new dataLoader({
 					url: 'http://ulyssemalassagne.tumblr.com',
-					filter: '',
+					filter: 'coords:',
 					dataSet: {
+						location: function(post){
+							var loc;
+							for (tag of post.tags) {
+								if (tag.startsWith("location:")) {
+									loc = tag.substr(9);
+								}
+							}
+							return loc;
+						},
 						date: function(post){return Date.parse(post.date);},
 						pic: "photo-url-500",
 						ratio: function(post){return post.height/post.width;}
@@ -46,7 +55,7 @@
 				},
 				function(data){
 					var container = document.getElementsByTagName("article")[0];
-					tumblrIndex(container,sorting)(data);
+					tumblrMap(container)(data);
 				});
 			(function() {dLoader.requestPosts()})();
 		</script>
