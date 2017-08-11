@@ -28,9 +28,7 @@ function tumblrMap (container) {
 		for (index in data.entries) {
 			console.log(data.entries);
 			entry = data.entries[index];
-			coords = entry.title.split(';').map(function(elt){
-				return elt/100;
-			});
+			coords = entry.title.split(';');
 			console.log(coords);
 			current = $.createElement("A");
 			current.setAttribute("href", data.blog + "/tagged/" + entry.location);
