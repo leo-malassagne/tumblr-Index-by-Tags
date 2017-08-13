@@ -77,7 +77,7 @@ function tumblrIndex (container, sortOptions) {
 				entry = data.entries[index];
 				
 				current = $.createElement("A");
-				current.setAttribute("href", data.blog + "/tagged/" + data.filter + entry.title);
+				current.setAttribute("href", data.blog + "/tagged/" + entry.title);
 				current.setAttribute("title", entry.title);
 				gal.appendChild(current);
 				
