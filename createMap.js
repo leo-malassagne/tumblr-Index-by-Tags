@@ -40,15 +40,9 @@ function tumblrMap (container) {
 			)
 			.addTo(map);
 			
-			elmt = $.createElement("DIV");
-			elmt.className = "entry";
-			current.appendChild(elmt);
-			current = elmt;
-			
 			elmt = $.createElement("IMG");
 			elmt.className = 'entry-thumbnail';
 			elmt.setAttribute("src", entry.pic);
-			elmt.style.width = '200px';
 			current.appendChild(elmt);
 			
 			elmt = $.createElement("DIV");
