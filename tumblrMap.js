@@ -1,4 +1,4 @@
-function generateMap (blogURL, posts) {
+function generateMap (blogURL, posts, options) {
 	
 	var $ = document,
 		root = $.createElement("DIV"),
@@ -25,13 +25,7 @@ function generateMap (blogURL, posts) {
 		coords = [];
 	
 	root.id = "map"
-	map = L.map(
-		root, {
-			center: [0, 0],
-			zoom: 1,
-			minZoom: 1
-		}
-	)
+	map = L.map(root, options)
 	.addLayer(
 		L.tileLayer(
 			'https://api.mapbox.com/styles/v1/mapbox/outdoors-v10/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoibGVrbm8iLCJhIjoiY2l3NTY0czBsMDBtcjJ0czUzYWxwM3QwdyJ9.K3NGw5w8p_FbeEhRepBL1w',
