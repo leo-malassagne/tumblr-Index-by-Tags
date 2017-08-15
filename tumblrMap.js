@@ -23,9 +23,7 @@ function generateMap (blogURL, posts, options) {
 		map,
 		entry,
 		coords = [];
-	
-	root.id = "map"
-	map = L.map(root, options)
+	map = L.map("map", options)
 	.addLayer(
 		L.tileLayer(
 			'https://api.mapbox.com/styles/v1/mapbox/outdoors-v10/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoibGVrbm8iLCJhIjoiY2l3NTY0czBsMDBtcjJ0czUzYWxwM3QwdyJ9.K3NGw5w8p_FbeEhRepBL1w',
