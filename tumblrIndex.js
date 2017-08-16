@@ -101,8 +101,7 @@ function generateIndex (blogURL, posts, options) {
 				filter: 'id:',
 				dataSet: {
 					date: function(post){return Date.parse(post.date);},
-					pic: "photo-url-500",
-					ratio: function(post){return post.height/post.width;}
+					pic: "photo-url-500"
 				},
 				overwrite: true
 			}),

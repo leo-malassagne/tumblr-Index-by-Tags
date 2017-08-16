@@ -15,8 +15,7 @@ function generateMap (blogURL, posts, options) {
 					return loc;
 				},
 				date: function(post){return Date.parse(post.date);},
-				pic: "photo-url-500",
-				ratio: function(post){return post.height/post.width;}
+				pic: "photo-url-500"
 			},
 			overwrite: true
 		}),
@@ -42,7 +41,7 @@ function generateMap (blogURL, posts, options) {
 		coords = entry.title.split(';');
 		console.log(coords);
 		current = $.createElement("A");
-		current.setAttribute("href", blogURL + "/tagged/" + entry.location);
+		current.setAttribute("href", blogURL + "/tagged/" + entry.location + "/page/" + entry.nbPages);
 		current.setAttribute("title", entry.title);
 		L.marker(coords)
 		.bindPopup(
