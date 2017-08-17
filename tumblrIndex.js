@@ -96,6 +96,13 @@ function generateIndex (blogURL, posts, options) {
 	
 	var $ = document,
 		root = $.createElement("DIV"),
+		data;
+	
+	if (typeof extractData === "undefined") {
+		root.className = "error";
+		root.innerHTML = "<strong>Impossible d'afficher l'index :</strong> <em>Extracteur de données indisponible.</em>";
+	}
+	else {
 		data = {
 			entries: extractData(posts, {
 				filter: 'id:',
@@ -106,12 +113,19 @@ function generateIndex (blogURL, posts, options) {
 				overwrite: true
 			}),
 			sortedBy: 'date',
-			order: "d&eacute;croissant"
-		};
-		sortMenu = createSortMenu(sortOptions);
-		gallery = createGallery(data);
-		root.id = "index";
-		root.appendChild(sortMenu);
-		root.appendChild(gallery);
-		return root;
+			order: "decroissant"
+		}
+		if (!data || !data.entries) {
+			root.className = "error";
+			root.innerHTML = "<strong>Impossible d'afficher l'index :</strong> <em>Données manquantes.</em>";
+		}
+		else {
+			sortMenu = createSortMenu(sortOptions);
+			gallery = createGallery(data);
+			root.id = "index";
+			root.appendChild(sortMenu);
+			root.appendChild(gallery);
+		}
+	}
+	return root;
 }
