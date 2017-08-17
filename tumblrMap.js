@@ -9,11 +9,11 @@ function generateMap (blogURL, posts, options) {
 		
 	if (typeof extractData === "undefined") {
 		root.className = "error";
-		root.innerHTML = "<strong>Impossible d'afficher l'index :</strong> <em>Extracteur de données indisponible.</em>";
+		root.innerHTML = "<strong>Impossible d'afficher la carte :</strong> <em>Extracteur de données indisponible.</em>";
 	}
 	else if (typeof L === "undefined") {
 		root.className = "error";
-		root.innerHTML = "<strong>Impossible d'afficher l'index :</strong> <em>Leaflet indisponible.</em>";
+		root.innerHTML = "<strong>Impossible d'afficher la carte :</strong> <em>Leaflet indisponible.</em>";
 	}
 	else {
 		data =  extractData(posts, {
@@ -35,7 +35,7 @@ function generateMap (blogURL, posts, options) {
 		});
 		if (!data || !data.entries) {
 			root.className = "error";
-			root.innerHTML = "<strong>Impossible d'afficher l'index :</strong> <em>Données manquantes.</em>";
+			root.innerHTML = "<strong>Impossible d'afficher la carte :</strong> <em>Données manquantes.</em>";
 		}
 		else {
 			map = L.map("map", options)
