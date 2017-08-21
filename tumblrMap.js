@@ -38,6 +38,13 @@ function generateMap (blogURL, posts, options) {
 			root.innerHTML = "<strong>Impossible d'afficher la carte :</strong> <em>Données manquantes.</em>";
 		}
 		else {
+			var leaf = L.icon({
+				iconUrl: 'https://rawgit.com/leo-malassagne/tumblr-Index-by-Tags/master/leaf.png',
+
+				iconSize:     [23, 43],
+				iconAnchor:   [12, 42],
+				popupAnchor:  [-2, -37]
+			});
 			map = L.map("map", options)
 			.addLayer(
 				L.tileLayer(
@@ -61,7 +68,7 @@ function generateMap (blogURL, posts, options) {
 					current = $.createElement("A");
 					current.setAttribute("href", blogURL + "/tagged/" + entry.location + "/page/" + entry.nbPages);
 					current.setAttribute("title", entry.title);
-					L.marker(coords)
+					L.marker(coords, {icon: leaf})
 					.bindPopup(
 						L.popup()
 						.setContent(current)
