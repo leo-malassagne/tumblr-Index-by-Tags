@@ -39,7 +39,7 @@ function generateMap (blogURL, posts, options) {
 		}
 		else {
 			var leaf = L.icon({
-				iconUrl: 'https://rawgit.com/leo-malassagne/tumblr-Index-by-Tags/master/leaf.png',
+				iconUrl: './leaf.png',
 
 				iconSize:     [23, 43],
 				iconAnchor:   [12, 42],
