@@ -38,14 +38,8 @@ function generateMap (blogURL, posts, options) {
 			root.innerHTML = "<strong>Impossible d'afficher la carte :</strong> <em>Données manquantes.</em>";
 		}
 		else {
-			var leaf = L.icon({
-				iconUrl: './leaf.png',
-
-				iconSize:     [23, 43],
-				iconAnchor:   [12, 42],
-				popupAnchor:  [-2, -37]
-			});
-			map = L.map("map", options)
+			var leaf = L.icon(options.marker);
+			map = L.map("map", options.map)
 			.addLayer(
 				L.tileLayer(
 					'https://api.mapbox.com/styles/v1/mapbox/outdoors-v10/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoibGVrbm8iLCJhIjoiY2l3NTY0czBsMDBtcjJ0czUzYWxwM3QwdyJ9.K3NGw5w8p_FbeEhRepBL1w',
